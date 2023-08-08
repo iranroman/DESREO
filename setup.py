@@ -8,7 +8,7 @@ with open('README.md') as file:
 version = imp.load_source('desreo.version', 'desreo/version.py')                         
                                                                                                              
 setup(                                                                                                       
-    name='',                                                                                 
+    name='desreo',
     version=version.version,                                                                                 
     description='',
     author='',                                                                                  
