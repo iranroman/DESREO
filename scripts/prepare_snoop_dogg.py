@@ -26,9 +26,7 @@ for i, url in enumerate(yt_urls):
   downloaded_file = video.download()
   songname_path = Path(f'song_{i}.mp3')
   filename = songname_path.stem
-  Path(downloaded_file).rename(songname_path)
-  new_songname_path = original_audio_path / songname_path
-  songname_path.rename(new_songname_path)
+  Path(downloaded_file).rename(new_songname_path / songname_path)
   print(f'isolating vocals from song {i} using DEMUCS')
   subprocess.run(['demucs', '--two-stems=vocals', str(new_songname_path)])
   subprocess.run(['mv', f'separated/htdemucs/{filename}/vocals.wav', f'data/separated_vocals/{filename}.wav'])
