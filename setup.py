@@ -29,7 +29,8 @@ setup(
             "Topic :: Multimedia :: Audio :: Rap",                                            
         ],                                                                                                   
     install_requires=[
-		'pytube',
+        'pathlib',
+        'pytube',
         'demucs',
     ],                                                                                                       
 )    
