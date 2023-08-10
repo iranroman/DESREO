@@ -24,7 +24,7 @@ class Snoop_Dogg(torch.utils.data.Dataset):
                fs=22050,
                env_fs = 100,
                path_to_raw_audio = '.',
-               datapoint_dur = 10,
+               datapoint_dur = 10, # in seconds
                lowpass_cutoff = 10,
                ):
     self.audio_fs = fs
