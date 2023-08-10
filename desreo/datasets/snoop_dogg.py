@@ -3,7 +3,8 @@ import torch
 import os
 import numpy as np
 import scipy
-from scipy.signal import butter, hilbert, filtfilt
+import librosa
+from scipy.signal import butter, hilbert, filtfilt, resample
 
 def butter_lowpass(cutoff, fs, order=5):
         nyq = 0.5 * fs
@@ -61,19 +62,24 @@ class Snoop_Dogg(torch.utils.data.Dataset):
       total_datapoints += int(dur // self.datapoint_dur)
     return total_datapoints
       
-  def __getitem__(self, idx):
+  def __getitem__(self, idx, return_envelope='True'):
     song_index = [i for i, ranges in enumerate(self.ranges) if idx in ranges][0]
     songname = self.filenames[song_index]
     x, sr = librosa.load(os.path.join(self.path_to_raw_audio,songname), 
                  offset = self.datapoint_dur * self.ranges[song_index].index(idx), 
                  duration = self.datapoint_dur, sr=self.audio_fs)
-    x_env = np.abs(hilbert(x))
-    x_env = butter_lowpass_filter(x_env,self.lowpass_cutoff,self.audio_fs)
-    x_env = resample(x_env,self.datapoint_dur * self.env_fs)
-    x_env = np.diff(x_env)
-    x_env = x_env - np.mean(x_env)
-    x_env = x_env / np.std(x_env)
-    return x_env
+
+    if return_envelope:
+        # envelope processing
+        x_env = np.abs(hilbert(x))
+        x_env = butter_lowpass_filter(x_env,self.lowpass_cutoff,self.audio_fs)
+        x_env = resample(x_env,self.datapoint_dur * self.env_fs)
+        x_env = np.diff(x_env)
+        x_env = x_env - np.mean(x_env)
+        x_env = x_env / np.std(x_env)
+        return x_env
+    else:
+        return x
 
 def snoop_dogg_loader(cfg, split):
 
