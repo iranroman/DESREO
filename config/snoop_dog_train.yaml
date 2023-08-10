@@ -1,5 +1,6 @@
 FS: 22050                              # in Hz
 DATAPOINT_DUR: 10                      # in seconds
 ENV_FS: 100                            # in Hz
+LOWPASS_CUTOFF: 10                     # in Hz
 PATH_TO_FILES: 'data/separated_vocals' # path where the data lives
 SPLIT: 'train'

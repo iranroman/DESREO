@@ -19,22 +19,15 @@ def butter_lowpass_filter(data, cutoff, fs, order=5):
 class Snoop_Dogg(torch.utils.data.Dataset):
 
   # the dataset initialization
-  def __init__(self,
-               split,
-               fs=22050,
-               env_fs = 100,
-               path_to_raw_audio = '.',
-               datapoint_dur = 10, # in seconds
-               lowpass_cutoff = 10,
-               ):
-    self.audio_fs = fs
-    self.env_fs = env_fs
-    self.path_to_raw_audio = path_to_raw_audio
-    self.split = split
-    self.datapoint_dur = datapoint_dur
+  def __init__(self, cfg):
+    self.audio_fs = cfg.FS
+    self.env_fs = cfg.ENV_FS
+    self.path_to_raw_audio = cfg.PATH_TO_FILES
+    self.split = cfg.SPLIT
+    self.datapoint_dur = cfg.DATAPOINT_DUR
     self.filenames = self.get_filenames(self.path_to_raw_audio, self.split)
     self.npoints_per_file, self.ranges = self.get_song_npoints_and_idxrange()
-    self.lowpass_cutoff = lowpass_cutoff
+    self.lowpass_cutoff = cfg.LOWPASS_CUTOFF
 
   def get_song_npoints_and_idxrange(self):
     npoints = []
