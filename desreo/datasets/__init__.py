@@ -1,1 +1,1 @@
-from .snoop_dogg import Snoop_Dogg
+from .snoop_dogg import snoop_dogg_loader

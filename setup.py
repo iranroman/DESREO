@@ -34,5 +34,7 @@ setup(
         'demucs',
         'scipy',
         'librosa',
+        'torchdiffeq>=0.2.3',
+        'pyyaml>=6.0',
     ],                                                                                                       
 )    
